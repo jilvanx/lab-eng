@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(200)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  works Work[]
+}
+
+model Work {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(200)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Concrete   Concrete[]
+  customerId Int
+  customer   Customer   @relation(fields: [customerId], references: [id])
+}
+
+model Concrete {
+  id          Int      @id @default(autoincrement())
+  moldingDate DateTime @db.Date
+  invoice     String   @db.VarChar(10)
+  qtd_cp      Int
+  fck         Int
+  slump       Int
+  piece       String   @db.VarChar(200)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ruptures Rupture[]
+  workId   Int
+  work     Work      @relation(fields: [workId], references: [id])
+}
+
+model Rupture {
+  id      Int      @id @default(autoincrement())
+  tf14h1  Decimal? @db.Decimal(5, 2)
+  tf14h2  Decimal? @db.Decimal(5, 2)
+  tf7d1   Decimal? @db.Decimal(5, 2)
+  tf7d2   Decimal? @db.Decimal(5, 2)
+  tf28d1  Decimal? @db.Decimal(5, 2)
+  tf28d2  Decimal? @db.Decimal(5, 2)
+  tf63d   Decimal? @db.Decimal(5, 2)
+  mpa14h1 Decimal? @db.Decimal(5, 2)
+  mpa14h2 Decimal? @db.Decimal(5, 2)
+  mpa7d1  Decimal? @db.Decimal(5, 2)
+  mpa7d2  Decimal? @db.Decimal(5, 2)
+  mpa28d1 Decimal? @db.Decimal(5, 2)
+  mpa28d2 Decimal? @db.Decimal(5, 2)
+  mpa63d  Decimal? @db.Decimal(5, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  concreteId Int
+  concrete   Concrete @relation(fields: [concreteId], references: [id], onDelete: Cascade)
+}
