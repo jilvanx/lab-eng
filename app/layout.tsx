@@ -1,6 +1,6 @@
 import "@radix-ui/themes/styles.css";
-import "./theme-config.css";
-import "./globals.css";
+import "./css/theme-config.css";
+import "./css/globals.css";
 
 import { ReactNode } from "react";
 

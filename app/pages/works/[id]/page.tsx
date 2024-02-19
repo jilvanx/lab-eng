@@ -102,7 +102,7 @@ const NewWorkPage = () => {
 
         <Form.Field className="grid mb-[10px]" name="name">
           <div className="flex items-baseline justify-between">
-            <Form.Label className="text-[13px] ">Nome do Cliente</Form.Label>
+            <Form.Label className="text-[13px] ">Nome da Obra</Form.Label>
             {errors.name?.message && (
               <Form.Message className="text-[13px] opacity-[0.8] text-red-700">
                 {errors.name?.message}
